@@ -1,0 +1,75 @@
+:root {
+    --primary-color: #E74C3C;
+    --text-color: #2C3E50;
+    --overlay: rgba(0, 0, 0, 0.6);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: white;
+    /* Background Awal */
+    background: linear-gradient(var(--overlay), var(--overlay)), url('Image/Endless\ For\ Beacon\ Background\ \(2024\ -\ 2028\).png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-image 1s ease-in-out; /* Transisi halus saat ganti gambar */
+}
+
+header, section {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* Logo */
+#main-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Player Button */
+#play-pause-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#play-pause-btn:hover { transform: scale(1.05); }
+
+/* Artwork */
+.artwork-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#radio-artwork {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#song-title { color: var(--primary-color); margin: 5px 0; }
+#artist-name { color: #7F8C8D; margin: 0; }
+
+footer { text-align: center; margin-top: auto; padding: 20px; font-size: 0.8rem; }
