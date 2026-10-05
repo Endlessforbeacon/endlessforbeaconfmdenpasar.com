@@ -2,43 +2,206 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Endless For Beacon FM Denpasar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endless For Beacon FM Denpasar - Live Streaming</title>
+    
+    <!-- Link Font Awesome untuk Ikon Media & Sosial -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Sign-In SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Firebase App & Database (Compat SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- Link CSS Terpisah -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
+    <!-- Header & Navigasi -->
+    <header class="navbar">
         <div class="logo-container">
-        <img src="Image/Endless For Beacon FM Denpasar.png" alt="Logo Radio Lokal" id="main-logo">
-    </div>
-        <h1>📻 Endless For Beacon FM Denpasar</h1>
-        <p>The Smile Of The Stand Out For The Radio</p>
+            <!-- LOGO RADIO CUSTOM (Ganti 'logo-beacon.png' dengan nama file logo kamu / URL logo) -->
+            <img src="Image/Logo.png" alt="Endless For Beacon FM Logo" class="radio-logo-img">
+            
+            <div class="logo-text">
+                <h1>Endless For Beacon FM Denpasar</h1>
+                <span>The Smile Of The Stand Out For The Radio</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div id="user-info" class="user-info">
+                <img id="user-avatar" class="user-avatar" src="" alt="Avatar" style="display: none;">
+                <span id="user-display" class="user-display"></span>
+            </div>
+            <button id="auth-btn" class="btn-login"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+        </div>
     </header>
 
-    <main>
-        <section id="radio-player">
-            <h2>Dengarkan Siaran Langsung!</h2>
+    <!-- Konten Utama -->
+    <main class="main-container">
+        
+        <!-- Kolom Kiri: Player & Schedule -->
+        <section class="left-panel">
             
-            <audio id="stream-player" controls autoplay>
-                <source src="https://stream.zeno.fm/kzizu3f1dlatv.mp3" type="audio/mpeg">
-                Browser Anda tidak mendukung elemen audio.
-            </audio>
+            <!-- Player Card -->
+            <div class="player-card">
+                <div class="station-badge">
+                    <span class="live-dot"></span> LIVE FROM DENPASAR
+                </div>
+                
+                <!-- Album Art Player juga disesuaikan dengan Logo Radio -->
+                <div class="album-art">
+                    <img src="Image/Logo.png" alt="Beacon FM Disc Logo" class="spin-art">
+                </div>
 
-            <button id="play-pause-btn">⏸️ Jeda</button>
-            <p id="status-message">Streaming Siap...</p>
+                <div class="track-info">
+                    <h2 id="now-playing-title">Endless For Beacon FM Denpasar</h2>
+                    <p id="now-playing-subtitle">The Smile Of The Stand Out For The Radio</p>
+                </div>
+
+                <!-- Custom Audio Control -->
+                <div class="audio-controls">
+                    <button id="play-pause-btn" class="play-btn">
+                        <i class="fa-solid fa-play" id="play-icon"></i>
+                    </button>
+                    <div class="volume-container">
+                        <i class="fa-solid fa-volume-high" id="volume-icon"></i>
+                        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.8">
+                    </div>
+                </div>
+
+                <!-- Native Audio -->
+                <audio id="audio-player">
+                    <source src="https://stream.zeno.fm/kzizu3f1dlatv" type="audio/mpeg">
+                    Browser Anda tidak mendukung elemen audio.
+                </audio>
+            </div>
+
+            <!-- Schedule Card -->
+            <div class="schedule-card">
+                <h3><i class="fa-solid fa-calendar-days"></i> Jadwal Siaran Denpasar</h3>
+                <div class="schedule-list">
+                    <div class="schedule-item active">
+                        <span class="day">Senin - Jumat</span>
+                        <span class="time">12:00 - 16:00 WITA</span>
+                        <div class="program-details">
+                            <strong>After Lunch Drive</strong>
+                            <p>Pagi Ceria Bareng Musik Favorit & Info Lalu Lintas Denpasar</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="day">Senin - Jumat</span>
+                        <span class="time">20:00 - 00:00 WITA</span>
+                        <div class="program-details">
+                            <strong>Starlight Sessionaire</strong>
+                            <p>Deretan Lagu Pop Hits Paling Hits Sepanjang Hari</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="day">Sabtu & Minggu</span>
+                        <span class="time">14:00 - 17:00 WITA</span>
+                        <div class="program-details">
+                            <strong>Spending The Weekend</strong>
+                            <p>Teman Pulang Kantor & Santai Sore Ala Pantai Dewata</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="day">Sabtu & Minggu</span>
+                        <span class="time">18:00 - 22:00 WITA</span>
+                        <div class="program-details">
+                            <strong>Hit It Trip Night</strong>
+                            <p>Kilas Musik Indie, Chill, dan Kirim Salam Request Lagu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
-        <section id="now-playing">
-            <h3>Sedang Diputar:</h3>
-            <p id="song-info">Mengambil informasi lagu...</p>
+        <!-- Kolom Kanan: Live Chat Realtime -->
+        <section class="right-panel">
+            <div class="chat-card">
+                <div class="chat-header">
+                    <h3><i class="fa-solid fa-comments"></i> Live Chat Listener</h3>
+                    <span class="online-count"><i class="fa-solid fa-circle"></i> Live Online</span>
+                </div>
+                
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message system-msg">
+                        <span>Selamat datang di Live Chat Endless For Beacon FM Denpasar!</span>
+                    </div>
+                </div>
+
+                <form id="chat-form" class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Tulis pesan atau request lagu..." required>
+                    <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
         </section>
 
-        </main>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Endless For Beacon FM Denpasar.</p>
+    <!-- Modal Login dengan Google (Versi Modern & Lengkap) -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            
+            <!-- Branding Radio Dalam Modal -->
+            <div class="modal-brand">
+                <img src="Image/Logo.png" alt="Endless For Beacon FM Logo" class="modal-logo-img">
+                <h2 class="modal-title">Endless For Beacon FM Denpasar</h2>
+                <span class="modal-tagline">The Smile Of The Stand Out For The Radio</span>
+            </div>
+
+            <p class="modal-desc">Masuk dengan akun Google Anda untuk bergabung dalam keseruan Live Chat & kirim request lagu secara langsung.</p>
+            
+            <!-- Tombol Google Sign-In Modern -->
+            <div class="google-btn-container">
+                <div id="g_id_onload"
+                     data-client_id="969783269309-99n69ig4hfbcpnvkn2dr0k86stbfejs2.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" 
+                     data-type="standard" 
+                     data-size="large" 
+                     data-theme="filled_blue" 
+                     data-text="continue_with" 
+                     data-shape="pill" 
+                     data-logo_alignment="left"
+                     data-width="300">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Terupdate dengan Logo, Nama, & Deskripsi -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="Image/Logo.png" alt="Endless For Beacon FM Logo" class="footer-logo">
+                <div class="footer-info">
+                    <h3>Endless For Beacon FM Denpasar</h3>
+                    <p class="footer-tagline">The Smile Of The Stand Out For The Radio</p>
+                    <p class="footer-desc">Nemenin Hari Lo Dengan Musik Yang Mungkin Beacon Listeners Suka, Berinteraksi Secara online 24 jam & Berbagai Sajian Siaran Lokal Khusus Beacon Listeners Di Kota Denpasar. Dimana Aja & Kapan Aja Radio Endless For Beacon FM!</p>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="social-links">
+                    <a href="https://www.instagram.com/endless_for.beacon/" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@EndlessForBeacon" title="Facebook"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@endless.for_beacon06/" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+                <p class="copyright">&copy; 2026 Endless For Beacon FM Corp. All Rights Reserved.</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- Script JS Terpisah -->
     <script src="script.js"></script>
 </body>
 </html>
